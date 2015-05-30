@@ -1,0 +1,15 @@
+<% provide(:title, 'WDF*IDF Aanalysis') %>
+<% @body_id = "wdf-idf" %>
+  <div class="row">    
+        <div class="col-lg-12">
+              <h1 class="page-header">Sistrx Abfrage</h1>
+        </div>                       
+  </div>
+  <div class="row">    
+            <div class="col-md-6">
+                  <%= form_tag do %>
+                    <%= text_field_tag(:keyword, params[:keyword], :placeholder => "Enter your keyword") %>
+                    <%= submit_tag("Analyze", class:'btn btn-success') %>
+                  <% end %>
+            </div>            
+   </div>

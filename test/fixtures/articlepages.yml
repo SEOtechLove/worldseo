@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url: MyString
+  channel: MyString
+  is_seotitle: false
+  title: MyString
+  title_length: 1
+  description: MyString
+  description_length: 1
+  kicker: MyString
+  h1: MyString
+
+two:
+  url: MyString
+  channel: MyString
+  is_seotitle: false
+  title: MyString
+  title_length: 1
+  description: MyString
+  description_length: 1
+  kicker: MyString
+  h1: MyString
