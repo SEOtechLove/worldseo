@@ -23,7 +23,7 @@ gem 'pg'
 gem 'pry-byebug'
 # JQuery Datatables
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
-gem 'google-api-client'
+
 gem 'will_paginate-bootstrap'
 # bCript
 gem 'bcrypt-ruby'
