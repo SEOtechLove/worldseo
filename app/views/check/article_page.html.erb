@@ -22,6 +22,11 @@
 		</div>
       <div>Anzahl Artikel ohne SEO-Title: <%= @article_without_seo %></div>
       <div>Aktualisierungsdatum: <%=  %></div>
+      <p>
+  			Download:
+  				<%= link_to "CSV", check_article_page_path(format: "csv") %> |
+  				<%= link_to "Excel", check_article_page_path(format: "xls") %>
+			</p>
       	<div class="panel-body">
       		<div class="table-responsive">
         		<table class="table table-striped table-bordered table-hover" id="dataTables-example">
