@@ -21,8 +21,13 @@
   					</div><!-- /.col-lg-6 -->
 			<% end %>
 		</div>
-		<div>Anzahl Themenseiten ohne Text: <%= @theme_without_text %></div>
-	      <div>Aktualisierungsdatum: <%= @get_actual_date %></div>
+			<div>Anzahl Themenseiten ohne Text: <%= @theme_without_text %></div>
+	      	<div>Aktualisierungsdatum: <%= @get_actual_date %></div>
+	     	<p>
+  			Download:
+  				<%= link_to "CSV", check_theme_page_path(format: "csv") %> |
+  				<%= link_to "Excel", check_theme_page_path(format: "xls") %>
+			</p>
 	      <hr />
 	  </div>
       	<div class="panel-body">

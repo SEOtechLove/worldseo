@@ -5,10 +5,12 @@ class CheckController < ApplicationController
 			@themepage_items = Themepage.search(params[:search]).order(sort_column_theme + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
 			@theme_count = get_count_theme_page
 			@theme_without_text = get_theme_page_without_text
-			respond_to do |format|
-			    format.html
-			    format.csv { send_data @themepage_items.to_csv }
-  			end
+			@themepage_items_all = Themepage.all
+  			respond_to do |format|
+     			format.html
+     			format.csv { send_data @themepage_items.to_csv(@themepage_items_all) }
+     			format.xls { send_data @themepage_items.to_csv(@themepage_items_all, col_sep: "\t") }  
+   			end
 			#update_theme_page_check
 			#add_breadcrumb "Themepage", :check
 		end
@@ -129,7 +131,7 @@ class CheckController < ApplicationController
 	  		Articlepage.create(:url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
 	  	end
 	  end
-	  
+
 	  def get_article_page_without_seo_title
 	  	Articlepage.where(is_seotitle: false).count
 	  end

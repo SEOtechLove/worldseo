@@ -8,17 +8,18 @@ class Themepage < ActiveRecord::Base
 	    end
 	  end
 
-def self.to_csv(options = {})
-  CSV.generate(options) do |csv|
-    csv << column_names
-    all.each do |product|
-      csv << Themepage.accessible_attributes_theme_page.values_at(*column_names)
+def self.to_csv(themepage_items, options = {})
+  wanted_columns = [:url, :channel, :character_count, :title, :title_length, :description, :description_length]
+  header = %w(url,channel,count_words,title,title_length,description,description_length)
+  CSV.generate do |csv|
+    csv << header
+    themepage_items.each do |themepage_items|
+      attrs = themepage_items.attributes.with_indifferent_access.values_at(*wanted_columns)
+      Rails.application.routes.url_helpers.check_theme_page_path(themepage_items.url)
+      csv << attrs
     end
   end
 end
-
-
-
 
 
 
