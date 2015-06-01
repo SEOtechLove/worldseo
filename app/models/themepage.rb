@@ -9,8 +9,8 @@ class Themepage < ActiveRecord::Base
 	  end
 
 def self.to_csv(themepage_items, options = {})
-  wanted_columns = [:url, :channel, :character_count, :title, :title_length, :description, :description_length]
-  header = %w(url,channel,count_words,title,title_length,description,description_length)
+  wanted_columns = [:url, :channel, :h1, :character_count, :title, :title_length, :description, :description_length]
+  header = %w(url,channel,h1,count_words,title,title_length,description,description_length)
   CSV.generate do |csv|
     csv << header
     themepage_items.each do |themepage_items|

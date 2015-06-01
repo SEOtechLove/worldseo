@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20150518082657) do
 
   create_table "articlepages", force: :cascade do |t|
+    t.string   "date"
     t.string   "url"
     t.string   "channel"
     t.boolean  "is_seotitle"
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150518082657) do
   create_table "themepages", force: :cascade do |t|
     t.string   "url"
     t.string   "channel"
+    t.string   "h1"
     t.integer  "character_count"
     t.string   "title"
     t.integer  "title_length"

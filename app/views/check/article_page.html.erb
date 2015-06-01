@@ -32,7 +32,8 @@
         		<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 			  		<thead>
 					    <tr>
-					      <th></th>					    
+					      <th></th>	
+					      <th><%= sortable_article "date", "DATE" %></th>				    
 					      <th><%= sortable_article "url", "URL" %></th>
 					      <th><%= sortable_article "channel", "Channel" %></th>
 					      <th><%= sortable_article "is_seotitle", "SEO?" %></th>
@@ -45,6 +46,7 @@
 					    <% @articlepage_items.each_with_index do |t, index|  %>
 					      <tr>
 					      	<td><%= index+1 %></td>
+					      	<td><%= t.date %></td>
 					        <td><a target=_blank href="<%= t.url %>"><%= t.url %></a> </td>
 					        <td><%= t.channel %></td>
 					        <td><%= t.is_seotitle %></td>

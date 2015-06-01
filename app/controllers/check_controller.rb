@@ -11,7 +11,8 @@ class CheckController < ApplicationController
      			format.csv { send_data @themepage_items_all.to_csv(@themepage_items_all) }
      			format.xls { send_data @themepage_items_all.to_csv(@themepage_items_all, col_sep: "\t") }  
    			end
-			#update_theme_page_check
+
+			update_theme_page_check
 			#add_breadcrumb "Themepage", :check
 		end
 
@@ -25,13 +26,14 @@ class CheckController < ApplicationController
      			format.csv { send_data @articlepage_items_all.to_csv(@articlepage_items_all) }
      			format.xls { send_data @articlepage_items_all.to_csv(@articlepage_items_all, col_sep: "\t") }  
    			end
+   			#update_article_page_check
 	  	end
 
 	  	
 
 	  	def update_theme_page_check
-	   	  	#themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-		    themen_ordner = ["q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+	   	  	themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+		    #themen_ordner = ["q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 		    themen_ordner.each do |alfa|
 		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin
@@ -48,93 +50,84 @@ class CheckController < ApplicationController
 		           end
 		           content_set = doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'themeBodyText', ' ' ))]").text
 		           channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
+		           h1 = doc.xpath("//h1").text
 		           title = doc.xpath('//html/head/title').text 
    				   title_count = title.length
    				   description = doc.xpath('//head/meta[@name = "description"]/@content').text 
    				   description_count = description.length
 		           if content_set.to_s.strip.length == 0
 		           		begin
-		                 store_as_themepage(element, channel, 0, title, title_count, description, description_count)
+		                 store_as_themepage(element, channel, h1, 0, title, title_count, description, description_count)
 		               end
 		           else 
 		               content_set = content_set.strip
 		               count_words = content_set.length
 		               begin
-		               	store_as_themepage(element, channel, count_words, title, title_count, description, description_count)
+		               	store_as_themepage(element, channel, h1, count_words, title, title_count, description, description_count)
 		           	   end
 		           end
 		     	 end
 		  	 end 
-		  	 @get_actual_date = get_actual_date
 	  	end		
 
-	  	def update_article_page_check
-	  	channels = ["debatte", "fernsehen", "geschichte", "gesundheit", "icon", "kultur", "motor", "politik", "reise", "satire", "sport", "vermischtes", "wirtschaft", "wissenschaft"] 
-   		home = "http://www.welt.de/"
-   		channels.each do |alfa|
-   			channel_root = "http://www.welt.de/#{alfa}/"
-		    xml_url = channel_root +'?service=Rss'
-		    begin
-		    xml_doc = Nokogiri::XML(open(xml_url ,"User-Agent" => "Ruby/#{RUBY_VERSION}"))
-		    rescue
-		    	next
-		    end
-		    url_link = xml_doc.xpath("//link")
-		    url_link = url_link.reverse
-      		url_link.each do |element|
-	           url_at = url_link.pop
-	           url = url_at.text
-	           if url == channel_root or url == home
-	              next
-	           end
-	           begin
-           	   doc = Nokogiri::HTML(open(url ,"User-Agent" => "Ruby/#{RUBY_VERSION}"))
-	           rescue
-	           	 next
-	           end
-	           #Auslesen Meta-Tags
-	           title_source = doc.xpath('//html/head/title').text 
-	           title_count = title_source.length
-	           begin
-	           		kicker = doc.xpath("//h2").first.text 
-	           rescue
-	           		kicker = nil
-	           end
-	           title = title_source.split(" - DIE WELT")
-	           title = title.join("")
-	           channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
-	           title = title.strip
-	           description = doc.xpath('//head/meta[@name = "description"]/@content').text 
-	           description_count = description.length
-	           h1 = doc.xpath("/html/body//h1").text.strip
-	           h1_kicker = "#{kicker}: "+"#{h1}"
-	           if h1_kicker == title
-	              	store_as_articlepage(url, channel, false, title, title_count, description, description_count, kicker, h1)
-	           else 
-	            	store_as_articlepage(url, channel, true, title, title_count, description, description_count, kicker, h1)
-	           end
-     		end
-   		end
-   		@get_actual_date = get_actual_date
-	  end
+	 def update_article_page_check
+	  		home = "http://www.welt.de/schlagzeilen/"
+	      	html = Nokogiri::HTML(open(home ,"User-Agent" => "Ruby/#{RUBY_VERSION}"))
+	      	date = html.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'date', ' ' ))]").last.text 
+	      	url = html.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'text', ' ' ))]//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'text', ' ' ))]//a").map { |link| link['href'] }
+	      	#Nodeset umdrehen 
+	      	url = url.reverse	
+	      		url.each do |element|
+           			url_at = url.pop
+           			begin
+           				doc = Nokogiri::HTML(open(url_at ,"User-Agent" => "Ruby/#{RUBY_VERSION}")) 
+           			rescue
+           				next
+           			end 
+           			#Auslesen Meta-Tags
+           			title_source = doc.xpath('//html/head/title').text 
+           			title_count = title_source.length
+           			channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
+           			begin
+	           			kicker = doc.xpath("//h2").first.text 
+	           		rescue
+	           			kicker = nil
+	           		end
+           			title = title_source.split(" - DIE WELT")
+	           		title = title.join("")
+	           		channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
+	           		title = title.strip
+	           		description = doc.xpath('//head/meta[@name = "description"]/@content').text 
+	           		description_count = description.length
+	           		h1 = doc.xpath("/html/body//h1").text.strip
+	           		h1_kicker = "#{kicker}: "+"#{h1}"
+	           		if h1_kicker == title
+	              		store_as_articlepage(date, element, channel, false, title, title_count, description, description_count, kicker, h1)
+	           		else 
+	            		store_as_articlepage(date, element, channel, true, title, title_count, description, description_count, kicker, h1)
+	           		end
+            
+      			end
+
+		end
 
 	  private
 	  
-	  def store_as_themepage(url, channel, count_words, title, title_length, description, description_length)
+	  def store_as_themepage(url, channel, h1, count_words, title, title_length, description, description_length)
 	  	if (Themepage.find_by_url(url) == nil)
-	  		Themepage.create(:url => url, :channel => channel, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
+	  		Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
 	  	else 
 	  		Themepage.find_by_url(url).delete 
-	  		Themepage.create(:url => url, :channel => channel, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
+	  		Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
 	  	end
 	  end
 
-	  def store_as_articlepage(url, channel, is_seotitle, title, title_length, description, description_length, kicker, h1)
+	  def store_as_articlepage(date, url, channel, is_seotitle, title, title_length, description, description_length, kicker, h1)
 	  	if (Articlepage.find_by_url(url) == nil)
-	  		Articlepage.create(:url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
 	  	else 
 	  		Articlepage.find_by_url(url).delete 
-	  		Articlepage.create(:url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
 	  	end
 	  end
 
@@ -152,10 +145,6 @@ class CheckController < ApplicationController
 
 	  def get_count_article_page
 			Articlepage.count
-	  end
-
-	  def get_actual_date
-	  		@get_actual_date = Time.now
 	  end
 
 	  def sort_column_theme
