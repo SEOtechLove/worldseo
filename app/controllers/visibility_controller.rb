@@ -9,8 +9,10 @@ class VisibilityController < ApplicationController
  	end
 
   def sistrix_page
-  		domain = "http://www.welt.de/themen/"
-		  api_key = "2QJTp3HNTkuqBZhcMPrayBQkdFpFQh87"
+		  @sistrix_items_all = SistrixVisibilityIndex.all
+      api_key = "2QJTp3HNTkuqBZhcMPrayBQkdFpFQh87"
+      get_sistrix_visibility_per_folder(get_sistrix_api_key)
+
   end
 
   private 
@@ -19,47 +21,52 @@ class VisibilityController < ApplicationController
 		  url = "http://api.sistrix.net/domain.kwcount.seo?api_key=#{api_key}&path=#{domain}"
 		  doc = Nokogiri::XML(open(url))
 		  kwcount = doc.xpath("//response/answer/kwcount.seo/@value")
-		  puts "Anzahl Keywords von #{domain}: #{kwcount}"
+      return kwcount
 	end
 
 
-	def get_sistrix_sichtbarkeitsindex(domain, api_key)
+	def get_sistrix_visibility_index(domain, api_key)
 		  url = "http://api.sistrix.net/domain.sichtbarkeitsindex?api_key=#{api_key}&path=#{domain}"
 		  doc = Nokogiri::XML(open(url))
 		  sbi = doc.xpath("//response/answer/sichtbarkeitsindex/@value")
-		  puts "Sichtbarkeitsindex von #{domain}: #{sbi}"
-	end
-
-	def get_sistrix_anzahl_keyword_domains_1_to_10(domain, api_key)
-		  url = "http://api.sistrix.net/keyword.domain.seo?api_key=$#{api_key}&domain=#{domain}/themen&dfrom_pos=1?to_pos=10"
+      return sbi
 	end
 
 
+  def get_sistrix_visibility_per_folder(api_key)
+      home = "http://www.welt.de/"
+      channels = ["http://www.welt.de/", "http://www.welt.de/themen/", "http://www.welt.de/debatte", "http://www.welt.de/fernsehen/", "http://www.welt.de/geschichte/", "http://www.welt.de/gesundheit/", "http://www.welt.de/icon/", "http://www.welt.de/kultur/", "http://www.welt.de/motor/", "http://www.welt.de/politik/", "http://www.welt.de/reise/", "http://www.welt.de/satire/", "http://www.welt.de/sport", "vhttp://www.welt.de/vermischtes", "http://www.welt.de/wirtschaft/", "http://www.welt.de/wissenschaft/"] 
+      channels.each do |t|
+      index = get_sistrix_visibility_index(t, api_key)
+      channel = get_channel(t)
+      kw = get_calendar_week
+        begin
+          store_sistrix_visibility_indices(t, channel, kw, index)
+        end
+      end
+  end
 
-  def analyze
-      keyword = params[:keyword]   
-      @view_hash = {}
-      keyword_hash = {}
-      serps = scrape_serps(keyword)
-      #Berechnung des ni pro Keyword - Anzahl der Urls, die das Keyword verwenden
-      keywords_nis = keyword_counter_hash(keyword, serps)
-      
-      index = 1
-      
-      serps.each do |url|
-      content_hash = get_content(url)
-        
-      content_hash['keywords'] = analyze_content(content_hash[:result_text], content_hash[:count], keywords_nis)
-      content_hash['index'] = index
-        
-      gon_ausgabe(index, content_hash['keywords'])
-     
-      index = index + 1
-        @view_hash[url.to_s] = content_hash
-      end 
-      
-      index = 1
-      
-      render :index  
-    end 
+  def get_channel(url)
+      return url
+  end
+
+  def get_calendar_week
+      return Time.now.strftime("%W").to_i
+  end
+
+  def store_sistrix_visibility_indices(url, channel, kw, index)
+        if (SistrixVisibilityIndex.find_by_url(url) == nil)
+          SistrixVisibilityIndex.create(:url => url, :channel => channel, :kw => kw, :index => index)
+        else 
+          SistrixVisibilityIndex.find_by_url(url).delete 
+          SistrixVisibilityIndex.create(:url => url, :channel => channel, :kw => kw, :index => index)
+        end
+  end
+
+  def get_sistrix_api_key
+      return "2QJTp3HNTkuqBZhcMPrayBQkdFpFQh87"
+  end
+
 end
+
+

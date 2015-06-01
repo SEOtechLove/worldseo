@@ -33,7 +33,7 @@ class CheckController < ApplicationController
 
 	  	def update_theme_page_check
 	   	  	#themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-		    themen_ordner = ["g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+		    themen_ordner = ["h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 		    themen_ordner.each do |alfa|
 		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin
