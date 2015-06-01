@@ -12,7 +12,7 @@ class CheckController < ApplicationController
      			format.xls { send_data @themepage_items_all.to_csv(@themepage_items_all, col_sep: "\t") }  
    			end
 
-			update_theme_page_check
+			#update_theme_page_check
 			#add_breadcrumb "Themepage", :check
 		end
 
