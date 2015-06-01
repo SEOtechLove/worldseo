@@ -12,7 +12,7 @@ class CheckController < ApplicationController
      			format.xls { send_data @themepage_items_all.to_csv(@themepage_items_all, col_sep: "\t") }  
    			end
 
-			#update_theme_page_check
+			update_theme_page_check
 			#add_breadcrumb "Themepage", :check
 		end
 
@@ -29,11 +29,11 @@ class CheckController < ApplicationController
    			#update_article_page_check
 	  	end
 
-	  	
+	  	private
 
 	  	def update_theme_page_check
-	   	  	themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-		    #themen_ordner = ["q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+	   	  	#themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+		    themen_ordner = ["g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 		    themen_ordner.each do |alfa|
 		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin
@@ -46,7 +46,7 @@ class CheckController < ApplicationController
 		           begin
 		           doc = Nokogiri::HTML(open(element_new))    
 		           rescue
-		           		next
+		           		next  
 		           end
 		           content_set = doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'themeBodyText', ' ' ))]").text
 		           channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
@@ -80,9 +80,12 @@ class CheckController < ApplicationController
 	      		url.each do |element|
            			url_at = url.pop
            			begin
-           				doc = Nokogiri::HTML(open(url_at ,"User-Agent" => "Ruby/#{RUBY_VERSION}")) 
-           			rescue
-           				next
+           					doc = Nokogiri::HTML(open(url_at ,"User-Agent" => "Ruby/#{RUBY_VERSION}")) 
+           				rescue StandardError => error
+     							puts "Error: #{error}"
+           				else
+           				ensure
+           					next
            			end 
            			#Auslesen Meta-Tags
            			title_source = doc.xpath('//html/head/title').text 
@@ -110,8 +113,6 @@ class CheckController < ApplicationController
       			end
 
 		end
-
-	  private
 	  
 	  def store_as_themepage(url, channel, h1, count_words, title, title_length, description, description_length)
 	  	if (Themepage.find_by_url(url) == nil)
