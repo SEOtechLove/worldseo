@@ -21,8 +21,4 @@ class Articlepage < ActiveRecord::Base
 	  end
 	end
 
-
-
-
-
 end

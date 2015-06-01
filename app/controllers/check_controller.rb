@@ -12,7 +12,7 @@ class CheckController < ApplicationController
      			format.xls { send_data @themepage_items_all.to_csv(@themepage_items_all, col_sep: "\t") }  
    			end
 
-			update_theme_page_check
+			#update_theme_page_check
 			#add_breadcrumb "Themepage", :check
 		end
 
@@ -20,7 +20,7 @@ class CheckController < ApplicationController
 	  		@articlepage_items = Articlepage.search(params[:search]).order(sort_column_article + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
 	  		@article_count = get_count_article_page
 	  		@article_without_seo = get_article_page_without_seo_title
-	  		@articlepage_items_all = Themepage.all
+	  		@articlepage_items_all = Articlepage.all
 	  		respond_to do |format|
      			format.html
      			format.csv { send_data @articlepage_items_all.to_csv(@articlepage_items_all) }
