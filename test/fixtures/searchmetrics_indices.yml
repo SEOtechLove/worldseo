@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url: MyString
+  channel: MyString
+  calender_week: MyString
+  searchmetrics_index: 1
+
+two:
+  url: MyString
+  channel: MyString
+  calender_week: MyString
+  searchmetrics_index: 1
