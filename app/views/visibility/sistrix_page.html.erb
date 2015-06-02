@@ -14,27 +14,28 @@
             <thead>
               <tr>
                 <th></th>
-                <th>URL</th>
-                <th>Channel</th>
-                <th>KW</th>
-                <th>SI</th>
+                <th><%= sortable_visibility "url", "URL" %></th>
+                <th><%= sortable_visibility "channel", "Channel" %></th>
+                <th><%= sortable_visibility "kw", "KW" %></th>
+                <th><%= sortable_visibility "sistrix_index", "SI" %></th>
               </tr>
             </thead>
 
           <tbody>
-              <% @sistrix_items_all.each_with_index do |s, i|  %>
+              <% @sistrix_items.each_with_index do |s, i|  %>
                 <tr>
                   <td><%= i+1 %></td>
                   <td><a target=_blank href="<%= s.url %>"><%= s.url %></a> </td>
                   <td><%= s.channel %></td>
                   <td><%= s.kw %></td>
-                  <td><%= s.index %></td>
+                  <td><%= s.sistrix_index %></td>
                 </tr>
                 <% end %>
             </tbody>
         </table>
       </div>
     </div>
+    <%= will_paginate @sistrix_items, renderer: BootstrapPagination::Rails%>
   </div>
     </div> <!-- span12 -->
   </div> <!-- row -->
