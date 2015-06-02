@@ -19,6 +19,7 @@ gem 'gon'                     #Javascript in Rails: Gon
 #gem 'morrisjs-rails'          # Grafische Library: Chartkick, Morris.js & Raphael.js Javascript 
 #gem 'raphael-rails'
 gem 'chartkick'
+gem 'groupdate'
 #gem 'dalli'                   #Memcache Speicherung mit Hilfe von £Dalli
 gem 'pg'
 gem 'pry-byebug'

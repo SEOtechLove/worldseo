@@ -4,7 +4,9 @@
    <title><%= yield(:title) %> | WeltN24 SEO Dashboard</title>
  
   <link rel="stylesheet" id="font-awesome-css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css" media="screen">
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+    <script src="//www.google.com/jsapi"></script>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
