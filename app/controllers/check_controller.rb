@@ -81,11 +81,8 @@ class CheckController < ApplicationController
            			url_at = url.pop
            			begin
            					doc = Nokogiri::HTML(open(url_at ,"User-Agent" => "Ruby/#{RUBY_VERSION}")) 
-           				rescue StandardError => error
-     							puts "Error: #{error}"
-           				else
-           				ensure
-           					next
+           			rescue 
+           				next
            			end 
            			#Auslesen Meta-Tags
            			title_source = doc.xpath('//html/head/title').text 

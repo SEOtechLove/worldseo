@@ -43,9 +43,7 @@ ActiveRecord::Schema.define(version: 20150601152404) do
     t.datetime "updated_at"
   end
 
-  add_index "models", ["email"], name: "index_models_on_email", unique: true
-  add_index "models", ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true
-
+  
   create_table "sistrix_visibility_indices", force: :cascade do |t|
     t.string   "url"
     t.string   "channel"
@@ -54,6 +52,10 @@ ActiveRecord::Schema.define(version: 20150601152404) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+
+  add_index "models", ["email"], name: "index_models_on_email", unique: true
+  add_index "models", ["reset_password_token"], name: "index_models_on_reset_password_token", unique: true
 
   create_table "themepages", force: :cascade do |t|
     t.string   "url"
