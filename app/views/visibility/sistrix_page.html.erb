@@ -20,18 +20,18 @@
                              <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                             <tr>
-                                            <th><%= sortable_visibility "kw", "KW" %></th>
-                                            <th><%= sortable_visibility "url", "URL" %></th>
                                             <th><%= sortable_visibility "channel", "Channel" %></th>
+                                            <th><%= sortable_visibility "url", "URL" %></th>
+                                            <th><%= sortable_visibility "kw", "KW" %></th>
                                             <th><%= sortable_visibility "sistrix_index", "SI" %></th>
                                             </tr>
                                     </thead>
                                       <tbody>
                                           <% @sistrix_items.each_with_index do |s, i|  %>
                                             <tr>
-                                              <td><%= s.kw %></td>
-                                              <td><a target=_blank href="<%= s.url %>"><%= s.url %></a> </td>
                                               <td><%= s.channel %></td>
+                                              <td><a target=_blank href="<%= s.url %>"><%= s.url %></a> </td>
+                                              <td><%= s.kw %></td>
                                               <td><%= s.sistrix_index %></td>
                                             </tr>
                                             <% end %>
