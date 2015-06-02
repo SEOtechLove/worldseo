@@ -16,6 +16,7 @@ class CheckController < ApplicationController
 			#add_breadcrumb "Themepage", :check
 		end
 
+
  		def article_page
 	  		@articlepage_items = Articlepage.search(params[:search]).order(sort_column_article + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
 	  		@article_count = get_count_article_page

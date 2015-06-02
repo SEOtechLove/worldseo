@@ -5,16 +5,13 @@ class VisibilityController < ApplicationController
  	end
 
  	def searchmetrics_page
-
+     @searchmetrics_items_all = SearchmetricsIndex.all  
  	end
 
   def sistrix_page
       #get_sistrix_visibility_per_folder(get_sistrix_api_key)
       @sistrix_items = SistrixVisibilityIndex.order(sort_column_visibility + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
-      @sistrix_items_all = SistrixVisibilityIndex.all
-
-      
-      
+      @sistrix_items_all = SistrixVisibilityIndex.all   
   end
 
   private 
@@ -71,11 +68,11 @@ class VisibilityController < ApplicationController
   end
 
   def sort_column_visibility
-      SistrixVisibilityIndex.column_names.include?(params[:sort]) ? params[:sort] : "url"
+      SistrixVisibilityIndex.column_names.include?(params[:sort]) ? params[:sort] : "sistrix_index"
   end
     
   def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
 
