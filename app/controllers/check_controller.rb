@@ -11,11 +11,9 @@ class CheckController < ApplicationController
      			format.csv { send_data @themepage_items_all.to_csv(@themepage_items_all) }
      			format.xls { send_data @themepage_items_all.to_csv(@themepage_items_all, col_sep: "\t") }  
    			end
-
-			#update_theme_page_check
+            #update_database
 			#add_breadcrumb "Themepage", :check
 		end
-
 
  		def article_page
 	  		@articlepage_items = Articlepage.search(params[:search]).order(sort_column_article + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
@@ -27,14 +25,19 @@ class CheckController < ApplicationController
      			format.csv { send_data @articlepage_items_all.to_csv(@articlepage_items_all) }
      			format.xls { send_data @articlepage_items_all.to_csv(@articlepage_items_all, col_sep: "\t") }  
    			end
-   			#update_article_page_check
+            #update_database
 	  	end
 
 	  	private
-
+        
+        def update_database
+            update_theme_page_check
+            update_article_page_check
+        end
+    
 	  	def update_theme_page_check
 	   	  	#themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-		    themen_ordner = ["h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+		    themen_ordner = ["0"]
 		    themen_ordner.each do |alfa|
 		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin

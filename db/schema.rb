@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602121209) do
+ActiveRecord::Schema.define(version: 20150602134208) do
 
   create_table "articlepages", force: :cascade do |t|
     t.string   "date"
@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(version: 20150602121209) do
     t.string   "url"
     t.string   "channel"
     t.string   "kw"
-    t.decimal  "sistrix_index"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.decimal  "sistrix_index", precision: 6, scale: 3
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "themepages", force: :cascade do |t|
