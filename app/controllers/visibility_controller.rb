@@ -32,7 +32,7 @@ class VisibilityController < ApplicationController
 	end
 
 
-  def get_sistrix_visibility_per_folder(api_key)
+    def get_sistrix_visibility_per_folder(api_key)
       home = "http://www.welt.de/"
       channels = ["http://www.welt.de/", "http://www.welt.de/themen/", "http://www.welt.de/debatte", "http://www.welt.de/fernsehen/", "http://www.welt.de/geschichte/", "http://www.welt.de/gesundheit/", "http://www.welt.de/icon/", "http://www.welt.de/kultur/", "http://www.welt.de/motor/", "http://www.welt.de/politik/", "http://www.welt.de/reise/", "http://www.welt.de/satire/", "http://www.welt.de/sport", "http://www.welt.de/vermischtes", "http://www.welt.de/wirtschaft/", "http://www.welt.de/wissenschaft/"] 
       channels.each do |t|
