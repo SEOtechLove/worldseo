@@ -11,11 +11,12 @@
         <div class="panel-body">
           <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a data-toggle="tab" href="#welt">welt.de</a></li>
-  <li role="presentation"><a data-toggle="tab" href="#grafic">Grafic</a></li>
+  <li role="presentation"><a data-toggle="tab" href="#focus">focus.de</a></li>
   <li role="presentation"><a data-toggle="tab" href="#spiegel">spiegel.de</a></li>
 </ul>
             <div class="tab-content">
                 <div id="welt" class="tab-pane fade in active">
+                  
                       <div class="table-responsive">
                              <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
@@ -35,18 +36,18 @@
                                               <td><%= s.sistrix_index %></td>
                                             </tr>
                                             <% end %>
-                                          <%= will_paginate @sistrix_items, renderer: BootstrapPagination::Rails%>
                                         </tbody>
                                 </table>
                     </div>
                     </div>
-                <div id="grafic" class="tab-pane fade">
-                    <%= column_chart SistrixVisibilityIndex.group( :sistrix_index, :channel), height: "500px"%>
+                <div id="focus" class="tab-pane fade">
+                    
                 </div>
                 <div id="spiegel" class="tab-pane fade">
                 </div>
                 </div>
             </div>
+          <%= will_paginate @sistrix_items, renderer: BootstrapPagination::Rails%>
   </div>
     </div> <!-- span12 -->
   </div> <!-- row -->
