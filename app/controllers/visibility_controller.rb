@@ -10,7 +10,7 @@ class VisibilityController < ApplicationController
 
   def sistrix_page
       #get_sistrix_visibility_per_channel_history(get_sistrix_api_key)
-      get_sistrix_visibility_per_channel(get_sistrix_api_key)
+      #get_sistrix_visibility_per_channel(get_sistrix_api_key)
       @sistrix_items = SistrixVisibilityIndex.order(sort_column_visibility + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
       @sistrix_items_all = SistrixVisibilityIndex.all   
   end
@@ -40,21 +40,6 @@ class VisibilityController < ApplicationController
       return svi
 	end    
     
-    def get_sistrix_visibility_per_channel_history(api_key)
-        channels = get_channels
-        date = get_dates
-        channels.each do |c|
-            date.each do |date|
-                sistrix_index = get_sistrix_visibility_index_per_date(c, api_key, date)
-                channel = get_channel(c)
-                kw = date
-                begin
-                  store_sistrix_visibility_indices(c, channel, kw, sistrix_index)
-                end
-            end
-        end
-  end
-    
     def get_channels
          channels = ["http://www.welt.de/", "http://www.welt.de/themen/", "http://www.welt.de/debatte", "http://www.welt.de/fernsehen/", "http://www.welt.de/geschichte/", "http://www.welt.de/gesundheit/", "http://www.welt.de/icon/", "http://www.welt.de/kultur/", "http://www.welt.de/motor/", "http://www.welt.de/politik/", "http://www.welt.de/reise/", "http://www.welt.de/satire/", "http://www.welt.de/sport", "http://www.welt.de/vermischtes", "http://www.welt.de/wirtschaft/", "http://www.welt.de/wissenschaft/"] 
         return channels
@@ -78,9 +63,25 @@ class VisibilityController < ApplicationController
       end
   end
 
+    def get_sistrix_visibility_per_channel_history(api_key)
+        #for storing historical data from sistrix api
+        channels = get_channels
+        date = get_dates
+        channels.each do |c|
+            date.each do |date|
+                sistrix_index = get_sistrix_visibility_index_per_date(c, api_key, date)
+                channel = get_channel(c)
+                kw = date
+                begin
+                  store_sistrix_visibility_indices(c, channel, kw, sistrix_index)
+                end
+            end
+        end
+  end
+    
   def get_channel(url)
       return url
-      #implement channel
+      #to do implement channel
   end
 
   def get_calendar_week
