@@ -3,6 +3,11 @@
 <head>
    <title><%= yield(:title) %> | WeltN24 SEO Dashboard</title>
   <link rel="stylesheet" id="font-awesome-css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css" media="screen">
+    <!-- Page-Level Plugin CSS - Dashboard 
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/plugins/timeline/timeline.css" rel="stylesheet">
+    <!-- SB Admin CSS - Include with every page 
+    <link href="css/sb-admin.css" rel="stylesheet">-->
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
     <script src="//www.google.com/jsapi"></script>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
@@ -30,7 +35,6 @@
       <!-- /#page-wrapper -->
 		<%= render 'layouts/footer' %>
    
-   </div>
    <!-- /#wrapper -->
    
    <% else %>	

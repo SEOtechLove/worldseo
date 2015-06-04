@@ -1,12 +1,20 @@
 <% provide(:title, 'WeltN24 SEO Dashboard') %>
-<% @body_id = "login-page" %>
+<% @body_id = "home-page" %>
 
-<div class="row">
+
+<div class="container">
+  <div class="row">
      <div class="col-lg-12">
-       <div class="jumbotron">
-         <h1>WeltN24 SEO Dashboard</h1>
-         
-       </div>
-     </div>       
-		
-</div>
+      <div class="panel panel-default">
+      <div class="panel-heading" name="top-ten-results" id="top-ten-results">
+      <h1>WeltN24 SEO Dashboard</h1>
+
+            </div>
+        <div class="panel-body">
+     <iframe scrolling="no" style="border:none;" width="250" height="413" src="http://www.google.de/trends/hottrends/widget?pn=p15&amp;tn=30&amp;h=413"></iframe>
+
+            </div>
+  </div>
+    </div> <!-- span12 -->
+  </div> <!-- row -->
+</div> <!-- container -->
