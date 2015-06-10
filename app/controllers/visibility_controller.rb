@@ -10,7 +10,7 @@ class VisibilityController < ApplicationController
 
   def sistrix_page
       #get_sistrix_visibility_per_channel_history(get_sistrix_api_key)
-      #get_sistrix_visibility_per_channel(get_sistrix_api_key)
+      get_sistrix_visibility_per_channel(get_sistrix_api_key)
       @sistrix_items = SistrixVisibilityIndex.order(sort_column_visibility + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
       @sistrix_items_all = SistrixVisibilityIndex.all   
   end
