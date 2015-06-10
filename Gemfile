@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-
+ruby "2.2.1"
 #gem "therubyracer"
 #gem "less-rails"
 
@@ -44,11 +44,12 @@ gem "breadcrumbs_on_rails"
 #better-errors
 group :development, :test do
   gem "better_errors"
+  gem 'sqlite3'
 end
 
 group :production do
-  # Use sqlite3 as the database for Active Record
-    gem 'sqlite3'
+    gem 'pg'
+
     gem 'thin'
 end
 
