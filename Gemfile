@@ -20,7 +20,7 @@ gem 'chartkick'
 
 gem 'groupdate'
 #gem 'dalli'                   #Memcache Speicherung mit Hilfe von £Dalli
-gem 'pg'
+
 gem 'pry-byebug'
 # JQuery Datatables
 gem 'jquery-datatables-rails'
