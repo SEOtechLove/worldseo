@@ -1,11 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 
 #gem "therubyracer"
 #gem "less-rails"
@@ -26,7 +23,7 @@ gem 'groupdate'
 gem 'pg'
 gem 'pry-byebug'
 # JQuery Datatables
-gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
+gem 'jquery-datatables-rails'
 
 gem 'will_paginate-bootstrap'
 # bCript
@@ -45,16 +42,23 @@ gem "breadcrumbs_on_rails"
 #gem 'thin'
 
 #better-errors
-group :development do
+group :development, :test do
   gem "better_errors"
 end
+
+group :production do
+  # Use sqlite3 as the database for Active Record
+    gem 'sqlite3'
+    gem 'thin'
+end
+
 gem "binding_of_caller"
 
 gem 'whenever', :require => false
 
 #pry alternative debugger
 gem 'pry', :group => :development
-gem 'pry-debugger'
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.3'
@@ -76,7 +80,7 @@ gem 'jbuilder', '~> 1.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+  gem 'sdoc'
 end
 
 # Use ActiveModel has_secure_password
