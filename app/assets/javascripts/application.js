@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require chartkick
+//= require sb-admin
 //= require turbolinks
 //= require_tree .

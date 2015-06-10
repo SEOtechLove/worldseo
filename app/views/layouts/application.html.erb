@@ -3,13 +3,10 @@
 <head>
    <title><%= yield(:title) %> | WeltN24 SEO Dashboard</title>
   <link rel="stylesheet" id="font-awesome-css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css" media="screen">
+     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <!-- Page-Level Plugin CSS - Dashboard -->
-    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="css/plugins/timeline/timeline.css" rel="stylesheet">
-  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-    <script src="//www.google.com/jsapi"></script>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <link href="assets/stylesheets/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="assets/stylesheets/timeline.css" rel="stylesheet">
   <%= csrf_meta_tags %>
 </head>
 

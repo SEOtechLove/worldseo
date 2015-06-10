@@ -133,6 +133,7 @@
 }
 
 @media(min-width:768px) {
+    
     .navbar-static-side {
         z-index: 1;
         position: absolute;
