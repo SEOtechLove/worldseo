@@ -118,21 +118,21 @@ class CheckController < ApplicationController
 
 	  def store_as_themepage(url, channel, h1, count_words, title, title_length, description, description_length)
           if (Themepage.find_by_url(url) == nil)
-	  		Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
+              Themepage.delay.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
 	  	else 
 	  		Themepage.find_by_url(url).delete 
-	  		Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
+	  		Themepage.delay.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
 	  	end
 	  end
 
 	  def store_as_articlepage(date, url, channel, is_seotitle, title, title_length, description, description_length, kicker, h1)
           if (Articlepage.find_by_url(url) == nil)
-	  		Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		Articlepage.delay.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
           elsif (Articlepage.find_by_url_and_date(url, date) == nil)
-	  		Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		Articlepage.delay.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
         else
               Articlepage.find_by_url(url).delete 
-	  		 Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		 Articlepage.delay.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
 	  	end
 	  end
     

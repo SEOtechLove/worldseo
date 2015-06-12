@@ -2,7 +2,7 @@ class Themepage < ActiveRecord::Base
 
  def self.search(search)
 	    if search
-	      where('url LIKE ?', "%#{search}%")
+            where('channel LIKE ?', "%#{search}%")
 	    else
 	      all
 	    end
