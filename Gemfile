@@ -17,7 +17,7 @@ gem 'gon'                     #Javascript in Rails: Gon
 #gem 'raphael-rails'
 gem 'chartkick'
 #gem 'highcharts'
-
+gem 'puma'
 gem 'groupdate'
 #gem 'dalli'                   #Memcache Speicherung mit Hilfe von £Dalli
 
