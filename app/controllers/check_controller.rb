@@ -127,12 +127,12 @@ class CheckController < ApplicationController
 
 	  def store_as_articlepage(date, url, channel, is_seotitle, title, title_length, description, description_length, kicker, h1)
           if (Articlepage.delay.find_by_url(url) == nil)
-	  		Articlepage.delay.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
           elsif (Articlepage.delay.find_by_url_and_date(url, date) == nil)
-	  		Articlepage.delay.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
         else
               Articlepage.delay.find_by_url(url).delete 
-	  		 Articlepage.delay.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
+	  		 Articlepage.create(:date => date, :url => url, :channel => channel, :is_seotitle => is_seotitle, :title => title, :title_length => title_length, :description => description, :description_length => description_length, :kicker => kicker, :h1 => h1)
 	  	end
 	  end
     
