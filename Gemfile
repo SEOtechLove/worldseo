@@ -16,6 +16,7 @@ gem 'gon'                     #Javascript in Rails: Gon
 #gem 'morrisjs-rails'          # Grafische Library: Chartkick, Morris.js & Raphael.js Javascript 
 #gem 'raphael-rails'
 gem 'chartkick'
+gem 'rails_12factor'
 #gem 'highcharts'
 gem 'puma'
 gem 'groupdate'
