@@ -15,9 +15,7 @@ Rails.application.routes.draw do
   
   #get 'analyze' => 'theme_page', :as => 'analyze'
   
-  post 'check/update' 
-
-  get 'check/update' => 'check/theme_page'
+  get 'check/update_database' 
 
   get 'visibility/sistrix_page'
 

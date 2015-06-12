@@ -28,30 +28,34 @@ class CheckController < ApplicationController
             #update_database
 	  	end
 
-	  	private
+	  
         
         def update_database
             update_theme_page_check
             update_article_page_check
         end
     
+    	private
 	  	def update_theme_page_check
-	   	  	#themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-		    themen_ordner = ["0"]
+	   	  	themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+		    #themen_ordner = ["0"]
 		    themen_ordner.each do |alfa|
 		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin
 		       		url_link = html_doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'atozlist', ' ' ))]//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'content', ' ' ))]//a['href=']").map { |link| link['href'] }
-		       rescue
-		       		next
+		       rescue 
+                   next
 	           end
 		       url_link.each_with_index do |element, index|
 		           element_new = URI.parse(URI.encode(element.strip)) 
 		           begin
 		           doc = Nokogiri::HTML(open(element_new))    
-		           rescue
-		           		next  
-		           end
+		           rescue OpenURI::HTTPError => e
+		       		if e.message == '404 Not Found'
+                        next
+                    else
+                        raise e
+		          end
 		           content_set = doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'themeBodyText', ' ' ))]").text
 		           channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
 		           h1 = doc.xpath("//h1").text
@@ -85,9 +89,12 @@ class CheckController < ApplicationController
            			url_at = url.pop
            			begin
            					doc = Nokogiri::HTML(open(url_at ,"User-Agent" => "Ruby/#{RUBY_VERSION}")) 
-           			rescue 
-           				next
-           			end 
+           			rescue OpenURI::HTTPError => e
+		       		if e.message == '404 Not Found'
+                        next
+                    else
+                        raise e
+                    end
            			#Auslesen Meta-Tags
            			title_source = doc.xpath('//html/head/title').text 
            			title_count = title_source.length
