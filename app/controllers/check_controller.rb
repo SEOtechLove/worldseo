@@ -43,19 +43,16 @@ class CheckController < ApplicationController
 		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin
 		       		url_link = html_doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'atozlist', ' ' ))]//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'content', ' ' ))]//a['href=']").map { |link| link['href'] }
-		       rescue 
-                   next
+		       rescue
+		       		next
 	           end
 		       url_link.each_with_index do |element, index|
 		           element_new = URI.parse(URI.encode(element.strip)) 
 		           begin
 		           doc = Nokogiri::HTML(open(element_new))    
-		           rescue OpenURI::HTTPError => e
-		       		if e.message == '404 Not Found'
-                        next
-                    else
-                        raise e
-		          end
+		           rescue
+		           		next  
+		           end
 		           content_set = doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'themeBodyText', ' ' ))]").text
 		           channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
 		           h1 = doc.xpath("//h1").text
@@ -89,12 +86,9 @@ class CheckController < ApplicationController
            			url_at = url.pop
            			begin
            					doc = Nokogiri::HTML(open(url_at ,"User-Agent" => "Ruby/#{RUBY_VERSION}")) 
-           			rescue OpenURI::HTTPError => e
-		       		if e.message == '404 Not Found'
-                        next
-                    else
-                        raise e
-                    end
+           			rescue 
+           				next
+           			end 
            			#Auslesen Meta-Tags
            			title_source = doc.xpath('//html/head/title').text 
            			title_count = title_source.length
