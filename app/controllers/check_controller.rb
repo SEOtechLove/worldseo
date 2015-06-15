@@ -120,10 +120,9 @@ class CheckController < ApplicationController
 	  def store_as_themepage(url, channel, h1, count_words, title, title_length, description, description_length)
           if (Themepage.find_by_url(url) == nil)
               Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
-	  	else if (Themepage.find_by_url(url) != nil)
+	  	elseif (Themepage.find_by_url(url) != nil)
 	  		Themepage.find_by_url(url).delete 
 	  		Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
-          else
 	  	end
 	  end
 
