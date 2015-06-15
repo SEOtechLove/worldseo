@@ -16,6 +16,7 @@ class VisibilityController < ApplicationController
 
     def update_database
         get_sistrix_visibility_per_channel(get_sistrix_api_key)
+        render 'index'
     end
     
     

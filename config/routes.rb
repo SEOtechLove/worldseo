@@ -7,21 +7,23 @@ Rails.application.routes.draw do
 
   get 'pages/about'
 
-  get 'check/index'
+  get 'check/index' 
+    
+    get 'check' => 'check#index' 
 
   get 'check/theme_page'
 
   get 'check/article_page'
-  
-
   
   get 'check/update_database' 
     
   get 'visibility/sistrix_page'
 
   get 'visibility/index'
+    
+    get 'visibility' => 'visibility#index' 
   
- get 'visibility/update_database'    
+ get 'visibility/update_database'  => 'visibility#index'    
     
   get 'visibility/searchmetrics_page'
 

@@ -1,7 +1,10 @@
 class CheckController < ApplicationController
 		helper_method :sort_column_theme, :sort_column_article, :sort_direction
-
-		def theme_page
+        
+    def index
+    end
+    
+        def theme_page
 			@themepage_items = Themepage.search(params[:search]).order(sort_column_theme + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
 			@theme_count = get_count_theme_page
 			@theme_without_text = get_theme_page_without_text
@@ -30,6 +33,7 @@ class CheckController < ApplicationController
         def update_database
             update_theme_page_check
             update_article_page_check
+            render 'check/index'
         end
     
     	private
