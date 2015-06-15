@@ -13,16 +13,19 @@ Rails.application.routes.draw do
 
   get 'check/article_page'
   
-  #get 'analyze' => 'theme_page', :as => 'analyze'
+
   
   get 'check/update_database' 
-
+    
   get 'visibility/sistrix_page'
 
   get 'visibility/index'
-
+  
+ get 'visibility/update_database'    
+    
   get 'visibility/searchmetrics_page'
 
+      #get 'analyze' => 'theme_page', :as => 'analyze'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -11,8 +11,6 @@ class CheckController < ApplicationController
      			format.csv { send_data @themepage_items_all.to_csv(@themepage_items_all) }
      			format.xls { send_data @themepage_items_all.to_csv(@themepage_items_all, col_sep: "\t") }  
    			end
-            #update_database
-			#add_breadcrumb "Themepage", :check
 		end
 
  		def article_page
@@ -25,7 +23,6 @@ class CheckController < ApplicationController
      			format.csv { send_data @articlepage_items_all.to_csv(@articlepage_items_all) }
      			format.xls { send_data @articlepage_items_all.to_csv(@articlepage_items_all, col_sep: "\t") }  
    			end
-            #update_database
 	  	end
 
 	  
