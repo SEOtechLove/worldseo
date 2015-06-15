@@ -52,7 +52,7 @@ class CheckController < ApplicationController
 		           begin
 		           doc = Nokogiri::HTML(open(element_new))    
 		           rescue
-		           		next  
+                       retry  
 		           end
 		           content_set = doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'themeBodyText', ' ' ))]").text
 		           channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
@@ -88,7 +88,7 @@ class CheckController < ApplicationController
            			begin
            					doc = Nokogiri::HTML(open(url_at ,"User-Agent" => "Ruby/#{RUBY_VERSION}")) 
            			rescue 
-           				next
+                        retry
            			end 
            			#Auslesen Meta-Tags
            			title_source = doc.xpath('//html/head/title').text 
@@ -120,8 +120,10 @@ class CheckController < ApplicationController
 	  def store_as_themepage(url, channel, h1, count_words, title, title_length, description, description_length)
           if (Themepage.find_by_url(url) == nil)
               Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
-	  	elseif (Themepage.find_by_url(url) != nil)
-	  		Themepage.find_by_url(url).delete 
+	  	elsif (Themepage.find_by_url(url) != nil)
+            
+        else
+              Themepage.find_by_url(url).delete 
 	  		Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
 	  	end
 	  end
