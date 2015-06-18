@@ -32,14 +32,14 @@ class CheckController < ApplicationController
         
         def update_database
             update_theme_page_check
-            update_article_page_check
+            #update_article_page_check
             render 'check/index'
         end
     
     	private
 	  	def update_theme_page_check
-	   	  	themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-		    #themen_ordner = ["0"]
+	   	  	#themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+		    themen_ordner = ["0"]
 		    themen_ordner.each do |alfa|
 		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin
@@ -118,14 +118,15 @@ class CheckController < ApplicationController
 		end
 
 	  def store_as_themepage(url, channel, h1, count_words, title, title_length, description, description_length)
-          if (Themepage.find_by_url(url) == nil)
-              Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
-	  	elsif (Themepage.find_by_url(url) != nil)
-            
-        else
-              Themepage.find_by_url(url).delete 
-	  		Themepage.create(:url => url, :channel => channel, :h1 => h1, :character_count => count_words, :title => title, :title_length => title_length, :description => description, :description_length => description_length)
-	  	end
+          entry = Themepage.find_or_initialize_by(url: url, channel: channel, h1: h1, character_count: count_words, title: title, title_length: title_length, description: description, description_length: description_length)
+          if entry.persisted?
+              return
+          elsif (Themepage.find_by_url(url) == nil)
+              entry.save
+          elsif entry.new_record?
+              Themepage.find_by_url(url).delete
+              entry.save
+          end
 	  end
 
 	  def store_as_articlepage(date, url, channel, is_seotitle, title, title_length, description, description_length, kicker, h1)
