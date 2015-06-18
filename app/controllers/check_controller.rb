@@ -32,8 +32,18 @@ class CheckController < ApplicationController
         
         def update_database
             update_theme_page_check
-            #update_article_page_check
+            update_article_page_check
             render 'check/index'
+        end
+    
+    def update_article_database
+            update_article_page_check
+        render 'check/article_page'
+        end
+    
+    def update_themepage_database
+        update_theme_page_check
+        render 'check/theme_page'
         end
     
     	private
