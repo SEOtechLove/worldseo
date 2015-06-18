@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   
   get 'check/update_database' 
     
+    get 'check/update_article_database' 
+    
+    get 'check/update_themepage_database' 
+    
   get 'visibility/sistrix_page'
 
   get 'visibility/index'
