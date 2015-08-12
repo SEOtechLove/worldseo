@@ -6,7 +6,7 @@ gem 'rails', '4.2.0'
 ruby "2.2.1"
 #gem "therubyracer"
 #gem "less-rails"
-
+gem 'mysql2'
 #gem 'sistrix', '~> 1.0.1'
 gem 'nokogiri'                # Nokogiri for scraping
 gem 'twitter-bootstrap-rails' # Twitter Bootstrap

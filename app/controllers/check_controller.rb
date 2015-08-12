@@ -3,7 +3,7 @@ class CheckController < ApplicationController
         
     def index
     end
-    
+    #mysql.server start
         def theme_page
 			@themepage_items = Themepage.search(params[:search]).order(sort_column_theme + " " + sort_direction).paginate(:per_page => 50, :page => params[:page])
 			@theme_count = get_count_theme_page
@@ -48,21 +48,22 @@ class CheckController < ApplicationController
     
     	private
 	  	def update_theme_page_check
-	   	  	#themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-		    themen_ordner = ["0"]
+	   	  	themen_ordner = ["0", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 		    themen_ordner.each do |alfa|
-		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
 		       begin
+		       html_doc = Nokogiri::HTML(open("http://www.welt.de/themen/#{alfa}"))
+		       
 		       		url_link = html_doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'atozlist', ' ' ))]//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'content', ' ' ))]//a['href=']").map { |link| link['href'] }
-		       rescue
+		       rescue => ex
 		       		next
 	           end
-		       url_link.each_with_index do |element, index|
-		           element_new = URI.parse(URI.encode(element.strip)) 
+		       url_link.each_with_index do |element, index| 
 		           begin
+		           element_new = URI.parse(URI.encode(element.strip)) 
 		           doc = Nokogiri::HTML(open(element_new))    
-		           rescue
-                       retry  
+		           rescue => ex
+		           	   store_as_themepage(element, "404", "404", "404", "404", "404", "404", "404")
+                       next 
 		           end
 		           content_set = doc.xpath("//*[contains(concat( ' ', @class, ' ' ), concat( ' ', 'themeBodyText', ' ' ))]").text
 		           channel = doc.xpath("//*[(@id = 'header')]//div[(((count(preceding-sibling::*) + 1) = 2) and parent::*)]//span").text
